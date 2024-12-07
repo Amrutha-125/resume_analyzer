@@ -9,6 +9,7 @@ This project is a *Job Application System* built using *Flask*. It provides two 
 - Extract names, emails, and skills from resumes.
 - Rank resumes based on their similarity to the provided job description.
 - Display skills present and missing in each resume.
+ 
  Job Seeker Portal
 - Upload a resume in PDF format.
 - Compare the resume against a provided job description.
