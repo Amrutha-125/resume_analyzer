@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiter - Resume Ranking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            padding: 20px;
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            max-width: 500px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        textarea, input[type="file"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        a {
+            color: #0056b3;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recruiter - Resume Ranking</h1>
+    <form action="/recruiter" method="POST" enctype="multipart/form-data">
+        <label for="job_description">Job Description:</label>
+        <textarea name="job_description" id="job_description" rows="5" required></textarea><br>
+
+        <label for="resume_files">Upload Resumes:</label>
+        <input type="file" name="resume_files" accept=".pdf" multiple required><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if results %}
+    <h2>Ranked Resumes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Skills Present</th>
+                <th>Similarity (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rank, names, emails, present_skills, similarity in results %}
+            <tr>
+                <td>{{ rank }}</td>
+                <td>{{ names[0] if names else "N/A" }}</td>
+                <td>{{ emails[0] if emails else "N/A" }}</td>
+                <td>{{ present_skills|join(", ") if present_skills else "N/A" }}</td>
+                <td>{{ similarity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br><br>
+    <a href="/download_csv">Download CSV</a>
+    {% endif %}
+</body>
+</html>
